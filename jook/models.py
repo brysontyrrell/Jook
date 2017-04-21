@@ -38,8 +38,7 @@ class Webhook(object):
             randomize=False,
             timer=0
     ):
-        """Initialize a Webhook object.
-
+        """
         :param str url: The target URL (must contain the scheme)
 
         :param str event: The type of webhook event. The available event types
@@ -53,14 +52,14 @@ class Webhook(object):
             randomly generated.
 
             If ``False`` certain values are generated during the object's
-            creation and stored. These values will be the same every time the
-            :method: ``fire`` is called.
+            creation and stored. These values will be the same each time
+            :func:`fire() <jook.models.Webhook.fire>` is called.
 
             If ``True`` those values will be set to ``None`` and generated
-            at the time of the :method: ``fire`` being called.
+            at the time :func:`fire() <jook.models.Webhook.fire>` is called.
 
         :param int timer: An optional value in seconds to specify the delay when
-            using the ``start_timer()`` method.
+            using :func:`start_timer() <jook.models.Webhook.start_timer>`.
 
         :param int webhook_id: An optional ID value for the webhook event.
 
@@ -93,7 +92,7 @@ class Webhook(object):
         else:
             raise InvalidMode("Must be 'json' or 'xml'")
 
-        self.data = None
+        self._data = None
         self.timer = int(timer)
 
     def to_json(self):
@@ -105,7 +104,7 @@ class Webhook(object):
         :return: JSON string
         :rtype: str
         """
-        return json.dumps(self._generate())
+        return json.dumps(self.get_data())
 
     def to_xml(self):
         """Return the object's ``data`` as XML.
@@ -114,18 +113,18 @@ class Webhook(object):
         :rtype: str
         """
         return dicttoxml(
-            self._generate(),
+            self.get_data(),
             custom_root='JSSEvent',
             attr_type=False
         )
 
-    def _generate(self):
+    def get_data(self):
         """This method generates the object data in JSON or XML format which is
         set by the ``data_type`` attributes.
 
         This method should be overridden by children that inherit this object.
         """
-        return self.data
+        return self._data
 
     def fire(self):
         """Send a POST request containing the object's data in the specified
@@ -147,8 +146,8 @@ class Webhook(object):
             request.raise_for_status()
 
     def start_timer(self, repeat=1):
-        """Start a series of :method: ``fire`` calls delayed by the  value of``timer``
-        in seconds for the number of times specified by ``repeat``.
+        """Start a series of :method: ``fire`` calls delayed by the  value of
+        ``timer`` in seconds for the number of times specified by ``repeat``.
 
         :param int repeat: Number of times to execute :method: ``fire``
         """
@@ -170,8 +169,10 @@ class Computer(Webhook):
     def __init__(self, *args, **kwargs):
         """Initialize a Computer Webhook object.
 
-        :param args: Arguments accepted by :class: ``Webhook``
-        :param kwargs: Keyword arguments accepted by :class: ``Webhook``
+        :param args: Arguments accepted by
+            :class:`Webhook <jook.models.Webhook>`
+        :param kwargs: Keyword arguments accepted by
+            :class:`Webhook <jook.models.Webhook>`
         """
         super(Computer, self).__init__(*args, **kwargs)
 
@@ -181,7 +182,7 @@ class Computer(Webhook):
         else:
             self._serial = generate_serial('computer')
             self._uuid = generate_uuid()
-            self.data = self._generate()
+            self._data = self.get_data()
 
     def _get_serial(self):
         """Return a serial number value.
@@ -205,14 +206,14 @@ class Computer(Webhook):
         """
         return self._uuid if self._uuid else generate_uuid()
 
-    def _generate(self):
+    def get_data(self):
         """Return ``data`` for the object as JSON or XML.
 
         :return: ``data`` as a dictionary object
         :rtype: str
         """
-        if self.data:
-            return self.data
+        if self._data:
+            return self._data
         else:
             return {
                 "webhook": {
