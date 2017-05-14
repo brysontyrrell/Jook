@@ -11,7 +11,7 @@ with open('README.rst', 'r') as fobj:
     long_description = fobj.read()
 
 setup(
-    name='Jook',
+    name='jook',
     version=version,
     description='A Jamf Pro webhook simulator',
     long_description=long_description,
