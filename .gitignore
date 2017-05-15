@@ -1,4 +1,5 @@
 *.pyc
+.cache/*
 build/
 docs/_build
 env/

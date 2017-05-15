@@ -23,14 +23,12 @@ def test_valid_events():
 
 def test_static_data():
     comp = jook.Computer('http://localhost', 'ComputerAdded')
-    assert comp._data is not None
-    assert comp.get_data() == comp.get_data()
+    assert comp.data == comp.data
 
 
 def test_random_data():
     comp = jook.Computer('http://localhost', 'ComputerAdded', randomize=True)
-    assert comp._data is None
-    assert comp.get_data() != comp.get_data()
+    assert comp.data != comp.data
 
 
 def test_mode():

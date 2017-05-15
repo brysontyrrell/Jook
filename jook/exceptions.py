@@ -7,6 +7,10 @@ class JookException(Exception):
     """Base Jook Exception."""
 
 
+class InvalidDeviceType(JookException):
+    """Invalid device type has been provided."""
+
+
 class InvalidEvent(JookException):
     """Invalid webhook event has been provided."""
 

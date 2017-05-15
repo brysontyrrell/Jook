@@ -59,6 +59,17 @@ SERIAL_CHAR_SETS = {
 }
 
 
+def generate_mac_address():
+    return "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}".format(
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255),
+        random.randint(0, 255)
+    )
+
+
 def generate_serial(mode):
     """Generate a mock serial number for a device.
 
