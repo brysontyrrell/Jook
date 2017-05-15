@@ -60,6 +60,7 @@ SERIAL_CHAR_SETS = {
 
 
 def generate_mac_address():
+    """Generate a mock MAC address for a device."""
     return "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}".format(
         random.randint(0, 255),
         random.randint(0, 255),

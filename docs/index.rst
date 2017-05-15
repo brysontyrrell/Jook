@@ -6,7 +6,7 @@
 Welcome to Jook's documentation!
 ================================
 
-.. automodule:: jook
+.. include:: ../README.rst
 
 
 Interface
@@ -15,34 +15,40 @@ Interface
 The Jook Object
 ---------------
 
-.. autoclass:: jook.models.Jook
+.. autoclass:: jook.models.webhooks.Jook
    :members:
 
 
 Base Webhook Object
 -------------------
 
-.. autoclass:: jook.models.Webhook
+.. autoclass:: jook.models.webhooks.BaseWebhook
    :members:
 
 
-Models
-------
+Device Models
+-------------
 
-.. autoclass:: jook.models.Computer
+.. autoclass:: jook.models.webhooks.Computer
+   :members:
+
+.. autoclass:: jook.models.webhooks.MobileDevice
    :members:
 
 
-Helper Functions
-----------------
+Data Sets
+---------
 
-.. autofunction:: jook.identifiers.generate_serial
+.. autoclass:: jook.models.data_sets.DeviceData
+   :members:
+
+.. autoclass:: jook.models.data_sets.LocationData
 
 
 Exceptions
 ----------
 
-.. autoexception:: jook.exceptions.JookException
+.. autoexception:: jook.exceptions.InvalidDeviceType
 .. autoexception:: jook.exceptions.InvalidEvent
 .. autoexception:: jook.exceptions.InvalidMode
 .. autoexception:: jook.exceptions.InvalidURL

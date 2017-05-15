@@ -10,7 +10,7 @@ from dicttoxml import dicttoxml
 import requests
 
 from .data_sets import DeviceData, LocationData
-from ..exceptions import InvalidDeviceType, InvalidEvent, InvalidMode, InvalidURL
+from ..exceptions import InvalidEvent, InvalidMode, InvalidURL
 
 
 class Jook(object):
@@ -37,7 +37,7 @@ class BaseWebhook(object):
             are defined in the ``valid_event`` attribute for the object.
 
         :param str mode: The type of data to send when calling
-            :func:`fire() <jook.models.BaseWebhook.fire>`.
+            :func:`fire() <jook.models.webhooks.BaseWebhook.fire>`.
 
             Can only be 'json' or 'xml'
 
@@ -46,20 +46,22 @@ class BaseWebhook(object):
 
             If ``False`` certain values are generated during the object's
             creation and stored. These values will be the same each time
-            :func:`fire() <jook.models.BaseWebhook.fire>` is called.
+            :func:`fire() <jook.models.webhooks.BaseWebhook.fire>` is called.
 
             If ``True`` those values will be set to ``None`` and generated
-            at the time :func:`fire() <jook.models.BaseWebhook.fire>` is called.
+            at the time :func:`fire() <jook.models.webhooks.BaseWebhook.fire>`
+            is called.
 
         :param int timer: An optional value in seconds to specify the delay when
-            using :func:`start_timer() <jook.models.BaseWebhook.start_timer>`.
+            using :func:`start_timer()
+            <jook.models.webhooks.BaseWebhook.start_timer>`.
 
         :param int webhook_id: An optional ID value for the webhook event.
 
         :param str webhook_name: An optional name for the webhook event.
 
         :raises InvalidEvent:
-        :raises: InvalidMode
+        :raises InvalidMode:
         :raises InvalidURL:
         :raises TypeError:
         """
@@ -100,8 +102,6 @@ class BaseWebhook(object):
     def to_json(self):
         """
         Return the object's ``data`` as JSON.
-
-        :param dict data: ``data`` as a dictionary object
 
         :return: JSON string
         :rtype: str
@@ -197,7 +197,7 @@ class Computer(BaseDevice):
         """Return ``data`` for the object as a dictionary.
 
         :return: ``data`` as a dictionary object
-        :rtype: str
+        :rtype: dict
         """
         return {
             "webhook": {
@@ -245,7 +245,7 @@ class MobileDevice(BaseDevice):
         """Return ``data`` for the object as a dictionary.
 
         :return: ``data`` as a dictionary object
-        :rtype: str
+        :rtype: dict
         """
         return {
             "webhook": {
