@@ -8,47 +8,10 @@ Welcome to Jook's documentation!
 
 .. include:: ../README.rst
 
+.. toctree::
+   :caption: Webhook Events
+   :maxdepth: 1
 
-Interface
-=========
-
-The Jook Object
----------------
-
-.. autoclass:: jook.models.webhooks.Jook
-   :members:
-
-
-Base Webhook Object
--------------------
-
-.. autoclass:: jook.models.webhooks.BaseWebhook
-   :members:
-
-
-Device Models
--------------
-
-.. autoclass:: jook.models.webhooks.Computer
-   :members:
-
-.. autoclass:: jook.models.webhooks.MobileDevice
-   :members:
-
-
-Data Sets
----------
-
-.. autoclass:: jook.models.data_sets.DeviceData
-   :members:
-
-.. autoclass:: jook.models.data_sets.LocationData
-
-
-Exceptions
-----------
-
-.. autoexception:: jook.exceptions.InvalidDeviceType
-.. autoexception:: jook.exceptions.InvalidEvent
-.. autoexception:: jook.exceptions.InvalidMode
-.. autoexception:: jook.exceptions.InvalidURL
+   events/base
+   events/devices
+   events/jamfpro

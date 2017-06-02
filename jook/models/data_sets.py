@@ -39,7 +39,7 @@ class DeviceData(object):
         if not randomize:
             self.set_mac_address()
             self.set_mac_address_alt()
-            self.set_serial_number(self.mode)
+            self.set_serial_number()
             self.set_uuid()
         else:
             self._mac_address = mac_address

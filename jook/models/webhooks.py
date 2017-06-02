@@ -28,8 +28,8 @@ class BaseWebhook(object):
     """
     valid_events = ('',)
 
-    def __init__(self, url, event, webhook_id=1, webhook_name='', mode='json',
-                 randomize=False, timer=0, *args, **kwargs):
+    def __init__(self, url, event, webhook_id=1, webhook_name='Webhook',
+                 mode='json', randomize=False, timer=0, *args, **kwargs):
         """
         :param str url: The target URL (must contain the scheme)
 
@@ -156,7 +156,7 @@ class BaseDevice(BaseWebhook):
 
     def __init__(self, *args, **kwargs):
         """If ``randomize`` has been set to ``True`` and a :class:`DeviceData`
-        object has not been passed, the instatiated :class:`DeviceData` object
+        object has not been passed, the instantiated :class:`DeviceData` object
         will be created with the ``randomized`` argument set.
 
         :param DeviceData device:
@@ -271,5 +271,57 @@ class MobileDevice(BaseDevice):
                 "modelDisplay": "",
                 "username": self.location.username,
                 "jssID": 1
+            }
+        }
+
+
+class JamfPro(BaseWebhook):
+    """The base Webhook object for 'JSS' events.
+    
+    :param str institution: The name of the organization the server is
+        registered to (defaults to 'Example Org').
+        
+    :param str host_address: The IP address of the originating server (defaults
+        to ``10.0.0.1``).
+    
+    :param str web_app_path: The root path of the web app for the server
+        (defaults to ``/``).
+    
+    :param bool is_master: Is the originating server a cluster master (defaults
+        to ``True``).
+    
+    :param str server_url: The URL of the originating server (defaults to
+        ``https://jss.example.org``).
+    """
+    valid_events = ('JSSShutdown', 'JSSStartup')
+
+    def __init__(self, *args, **kwargs):
+        super(JamfPro, self).__init__(*args, **kwargs)
+
+        self.institution = kwargs.pop('institution', 'Example Org')
+        self.host_address = kwargs.pop('host_address', '10.0.0.1')
+        self.web_app_path = kwargs.pop('web_app_path', '/')
+        self.is_master = bool(kwargs.pop('is_master', True))
+        self.server_url = kwargs.pop('server_url', 'https://jss.example.org')
+
+    @property
+    def data(self):
+        """Return ``data`` for the object as a dictionary.
+
+        :return: ``data`` as a dictionary object
+        :rtype: dict
+        """
+        return {
+            "webhook": {
+                "id": self.id,
+                "name": self.name,
+                "webhookEvent": self.event
+            },
+            "event": {
+                "institution": self.institution,
+                "hostAddress": self.host_address,
+                "webApplicationPath": self.web_app_path,
+                "isClusterMaster": self.is_master,
+                "jssUrl": self.server_url
             }
         }

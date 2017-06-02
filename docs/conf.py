@@ -21,7 +21,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
-from jook import __version__
+from jook import __author__, __copyright__, __version__
 
 # -- General configuration ------------------------------------------------
 
@@ -55,8 +55,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Jook'
-copyright = u'2017, Bryson Tyrrell'
-author = u'Bryson Tyrrell'
+copyright = __copyright__
+author = __author__
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -95,19 +95,24 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
+
+import sphinx_rtd_theme
+
+html_theme = 'sphinx_rtd_theme'
+html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-html_theme_options = {
-    'show_powered_by': False,
-    'github_user': 'brysontyrrell',
-    'github_repo': 'jook',
-    'github_banner': True,
-    'show_related': False
-}
+# html_theme_options = {
+#     'show_powered_by': False,
+#     'github_user': 'brysontyrrell',
+#     'github_repo': 'jook',
+#     'github_banner': True,
+#     'show_related': False
+# }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

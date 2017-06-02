@@ -26,7 +26,7 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7'
     ],
-    keywords='jamf webhooks testing',
+    keywords='jamf webhooks testing development tools',
     packages=['jook'],
     install_requires=[
         'dicttoxml>=1.7',
