@@ -15,3 +15,4 @@ Welcome to Jook's documentation!
    events/base
    events/devices
    events/jamfpro
+   events/patch

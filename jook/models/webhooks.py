@@ -1,7 +1,7 @@
 """
 This module contains the main classes that will be interacted with directly.
 """
-
+import datetime
 import json
 import time
 from urlparse import urlparse
@@ -90,14 +90,27 @@ class BaseWebhook(object):
 
         self.timer = int(timer)
 
+        self._webhook_data = {
+            "webhook": {
+                "id": self.id,
+                "name": self.name,
+                "webhookEvent": self.event
+            }
+        }
+
     @property
     def data(self):
         """This method generates the object data in JSON or XML format which is
         set by the ``data_type`` attributes.
 
         This method should be overridden by children that inherit this object.
+        
+        The ``data`` object contains the event specific key-values. It is then
+        updated with the key-values from ``_base_data``.
         """
-        return {}
+        data = {"event": {}}
+        data.update(self._webhook_data)
+        return data
 
     def to_json(self):
         """
@@ -284,14 +297,14 @@ class JamfPro(BaseWebhook):
         :param str institution: The name of the organization the server is
             registered to (defaults to 'Example Org').
         
-        :param str host_address: The IP address of the originating server (defaults
-            to ``10.0.0.1``).
+        :param str host_address: The IP address of the originating server
+            (defaults to ``10.0.0.1``).
         
         :param str web_app_path: The root path of the web app for the server
             (defaults to ``/``).
         
-        :param bool is_master: Is the originating server a cluster master (defaults
-            to ``True``).
+        :param bool is_master: Is the originating server a cluster master
+            (defaults to ``True``).
         
         :param str server_url: The URL of the originating server (defaults to
             ``https://jss.example.org``).
@@ -325,3 +338,64 @@ class JamfPro(BaseWebhook):
                 "jssUrl": self.server_url
             }
         }
+
+
+class PatchTitle(BaseWebhook):
+    """The base webhook object for 'Patch Title' events."""
+    valid_events = ('PatchSoftwareTitleUpdated',)
+
+    def __init__(self, *args, **kwargs):
+        """
+        
+        :param int jss_id: ID of the Patch Title in Jamf Pro (defaults to 1).
+        
+        :param str patch_name: The Patch Title name (defaults to 'Flash').
+        
+        :param str patch_version: The new Patch Title version (defaults to 1).
+        
+        :param str report_url: The URL to the Patch Title's report in Jamr Pro
+            (Defaults to 'https://jss.example.org/patch.html?id=' + the JSS ID).
+            
+        :param int timestamp: The UNIX timestamp of when the Patch Title was
+            updated. If not provided, or not a valid timestamp, it will be
+            set to the current time.
+        """
+        super(PatchTitle, self).__init__(
+            event='PatchSoftwareTitleUpdated', *args, **kwargs)
+
+        self.jss_id = kwargs.pop('jss_id', 1)
+        self.patch_name = kwargs.pop('patch_name', 'Flash')
+        self.patch_version = kwargs.pop('patch_version', '1')
+        self.patch_report_url = kwargs.pop(
+            'report_url',
+            'https://jss.example.org/patch.html?id={}'.format(self.jss_id)
+        )
+        self.patch_timestamp = kwargs.pop('timestamp', None)
+
+        try:
+            datetime.datetime.fromtimestamp(self.patch_timestamp)
+        except TypeError:
+            self.patch_timestamp = int(time.time() * 1000)
+
+    @property
+    def data(self):
+        """Return ``data`` for the object as a dictionary.
+
+        :return: ``data`` as a dictionary object
+        :rtype: dict
+        """
+        data = {
+            "event": {
+                "name": self.patch_name,
+                "latestVersion": self.patch_version,
+                "lastUpdate": self.patch_timestamp,
+                "reportUrl": self.patch_report_url,
+                "jssID": self.jss_id
+            }
+        }
+        data.update(self._webhook_data)
+        return data
+
+
+class SmartGroup(BaseWebhook):
+    pass
