@@ -276,26 +276,26 @@ class MobileDevice(BaseDevice):
 
 
 class JamfPro(BaseWebhook):
-    """The base Webhook object for 'JSS' events.
-    
-    :param str institution: The name of the organization the server is
-        registered to (defaults to 'Example Org').
-        
-    :param str host_address: The IP address of the originating server (defaults
-        to ``10.0.0.1``).
-    
-    :param str web_app_path: The root path of the web app for the server
-        (defaults to ``/``).
-    
-    :param bool is_master: Is the originating server a cluster master (defaults
-        to ``True``).
-    
-    :param str server_url: The URL of the originating server (defaults to
-        ``https://jss.example.org``).
-    """
+    """The base Webhook object for 'JSS' events."""
     valid_events = ('JSSShutdown', 'JSSStartup')
 
     def __init__(self, *args, **kwargs):
+        """
+        :param str institution: The name of the organization the server is
+            registered to (defaults to 'Example Org').
+        
+        :param str host_address: The IP address of the originating server (defaults
+            to ``10.0.0.1``).
+        
+        :param str web_app_path: The root path of the web app for the server
+            (defaults to ``/``).
+        
+        :param bool is_master: Is the originating server a cluster master (defaults
+            to ``True``).
+        
+        :param str server_url: The URL of the originating server (defaults to
+            ``https://jss.example.org``).
+        """
         super(JamfPro, self).__init__(*args, **kwargs)
 
         self.institution = kwargs.pop('institution', 'Example Org')
