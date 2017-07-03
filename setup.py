@@ -27,7 +27,7 @@ setup(
         'Programming Language :: Python :: 2.7'
     ],
     keywords='jamf webhooks testing development tools',
-    packages=['jook'],
+    packages=['jook', 'jook.models'],
     install_requires=[
         'dicttoxml>=1.7',
         'requests>=2.11'
