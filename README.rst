@@ -1,3 +1,12 @@
+Install Jook
+------------
+
+You can install Jook from the Pyhon Package Index:
+
+.. code-block:: bash
+
+    $ pip install jook
+
 Basic Usage
 -----------
 

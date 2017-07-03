@@ -1,5 +1,8 @@
 *.pyc
-.cache/*
+.cache/
 build/
+dist/
 docs/_build
 env/
+jook.egg-info/
+

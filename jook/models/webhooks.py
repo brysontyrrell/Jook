@@ -16,8 +16,10 @@ from ..exceptions import InvalidEvent, InvalidMode, InvalidURL
 class Jook(object):
     """The Jook class is an object for managing and creating large numbers of
     webhook objects and firing them as a group.
+
+    NOT IMPLEMENTED
     """
-    def __init__(self, url, fire_mode):
+    def __init__(self):
         pass
 
 

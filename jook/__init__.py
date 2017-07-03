@@ -4,6 +4,6 @@ from .models.data_sets import DeviceData, LocationData
 
 
 __title__ = 'jook'
-__version__ = '0.4'
+__version__ = '0.4.2'
 __author__ = 'Bryson Tyrrell'
 __copyright__ = '(c) 2017 Bryson Tyrrell'

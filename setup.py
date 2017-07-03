@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-from setuptools import setup
 import re
+from setuptools import setup
 
 with open('jook/__init__.py', 'r') as fobj:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]',
@@ -20,7 +20,7 @@ setup(
     author_email='bryson.tyrrell@gmail.com',
     license='MIT',
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
